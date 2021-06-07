@@ -1,0 +1,231 @@
+﻿@{
+    ViewBag.Title = "Calculate";
+}
+<link href="~/style/calculate.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<div class="container">
+
+    <form name="calculator" class="wrap">
+        <div>
+            <div class="row">
+                <input type="text" name="display" class="display" id="txt">
+            </div>
+
+
+            <div class="row fff">
+                <input type="button" id="clear" value="CE" onclick="calculator.display.value =''">
+                <input type="button" id="back" value="&#x2190;" onclick="calculator.display.value = (calculator.display.value).substring(0, (calculator.display.value).length - 1);">
+                <input type="button" class="operator" value="%" onclick="calculator.display.value  +='%' ">
+                <input type="button" class="operator" value="+" onclick="calculator.display.value += '+'">
+            </div>
+
+            <div class="row fff">
+                <input type="button" value="7" onclick="calculator.display.value +='7'">
+                <input type="button" value="8" onclick="calculator.display.value +='8'">
+                <input type="button" value="9" onclick="calculator.display.value +='9'">
+                <input type="button" class="operator" value="-" onclick="calculator.display.value +='-' ">
+            </div>
+            <div class="row fff">
+                <input type="button" value="4" onclick="calculator.display.value +='4'">
+                <input type="button" value="5" onclick="calculator.display.value +='5'">
+                <input type="button" value="6" onclick="calculator.display.value +='6'">
+                <input type="button" value="*" onclick="calculator.display.value +='*'">
+            </div>
+            <div class="row fff">
+                <input type="button" value="1" onclick="calculator.display.value +='1'">
+                <input type="button" value="2" onclick="calculator.display.value +='2'">
+                <input type="button" value="3" onclick="calculator.display.value +='3'">
+                <input type="button" value="/" onclick="calculator.display.value +='/'">
+            </div>
+
+
+            <div class="row fff">
+                <input type="button" value="0" onclick="calculator.display.value +='0'">
+                <input type="button" class="operator" id="plusorminus" value="&plusmn" onclick="calculator.display.value=(calculator.display.value)*(-1)">
+                <input type="button" value="." onclick="calculator.display.value +='.'">
+                <input type="button" value="=" onclick="Validation()">
+            </div>
+
+        </div>
+
+
+    </form>
+</div>
+<script>
+    function Validation() {
+        var values = $("#txt").val();
+        alert(values);
+    $.ajax(
+        {
+            url: '/Calculator/GetResult',
+            data:
+            {
+                calcValues: $("#txt").val()
+            },
+            method: 'POST',
+            async: false
+        })
+        .done(function (result)
+        {
+           if (result != "")
+           {
+                $("#txt").val(result);
+            }
+           else
+           {
+                alert("Something Went to Wromg !")
+            }
+        });
+    }
+
+   
+</script>
+
+
+@*<script >
+        $(function()
+        {
+            $("#txt").keypress(function (e)
+            {
+                if (String.fromCharCode(e.keyCode).match(/[^0-9+-/*]/g)) return false;
+            });
+
+
+            $("#txt").height("40px").width("312px");
+            $("#b0").click(function ()
+            {
+                var x = document.getElementById("txt").value;
+                if (x == "0") {
+                    $("#txt").val("0");
+                } else {
+                    $("#txt").val(x + "0")
+                }
+            });
+
+            $("#b1").click(function ()
+            {
+                var x = document.getElementById("txt").value;
+                if (x == "0") {
+                    $("#txt").val("1");
+                } else {
+                    $("#txt").val(x + "1")
+                }
+            });
+            $("#b2").click(function () {
+                var x = $("#txt").value;
+                if (x == "0") {
+                    $("#txt").val("2");
+                } else {
+                    $("#txt").val(x + "2")
+                }
+            });
+
+            $("#b3").click(function ()
+            {
+                var x = document.getElementById("txt").value;
+                if (x == "0") {
+                    $("#txt").val("3");
+                } else {
+                    $("#txt").val(x + "3")
+                }
+            });
+
+            $("#b4").click(function ()
+            {
+                var x = document.getElementById("txt").value;
+                if (x == "0") {
+                    $("#txt").val("4");
+                } else {
+                    $("#txt").val(x + "4")
+                }
+            });
+            $("#b5").click(function () {
+                var x = document.getElementById("txt").value;
+                if (x == "0") {
+                    $("#txt").val("5");
+                } else {
+                    $("#txt").val(x + "5")
+                }
+            });
+
+            $("#b6").click(function ()
+            {
+                var x = $("#txt").value;
+                if (x == "0") {
+                    $("#txt").val("6");
+                } else {
+                    $("#txt").val(x + "6")
+                }
+            });
+            $("#b7").click(function () {
+                var x = document.getElementById("txt").value;
+                if (x == "0") {
+                    $("#txt").val("7");
+                } else {
+                    $("#txt").val(x + "7")
+                }
+            });
+            $("#b8").click(function () {
+                var x = document.getElementById("txt").value;
+                if (x == "0") {
+                    $("#txt").val("8");
+                } else {
+                    $("#txt").val(x + "8")
+                }
+            });
+            $("#b9").click(function () {
+                var x = document.getElementById("txt").value;
+                if (x == "0") {
+                    $("#txt").val("9");
+                } else {
+                    $("#txt").val(x + "9")
+                }
+            });
+            $("#div").click(function () {
+                var x = document.getElementById("txt").value;
+                var y = x.slice(-1)
+                if (y == "/" || y == "+" || y == "*" || y == "-") { } else {
+                    $("#txt").val(x + "/")
+                }
+            });
+            $("#mul").click(function () {
+                var x = document.getElementById("txt").value;
+                var x = document.getElementById("txt").value;
+                var y = x.slice(-1)
+                if (y == "/" || y == "+" || y == "*" || y == "-") { } else {
+                    $("#txt").val(x + "*")
+                }
+            });
+            $("#sub").click(function () {
+                var x = document.getElementById("txt").value;
+                var x = document.getElementById("txt").value;
+                var x = document.getElementById("txt").value;
+                var y = x.slice(-1)
+                if (y == "/" || y == "+" || y == "*" || y == "-") { } else {
+                    $("#txt").val(x + "-")
+                }
+            });
+            $("#add").click(function () {
+                var x = document.getElementById("txt").value;
+                var x = document.getElementById("txt").value;
+                var x = document.getElementById("txt").value;
+                var x = document.getElementById("txt").value;
+                var y = x.slice(-1)
+                if (y == "/" || y == "+" || y == "*" || y == "-") { } else {
+                    $("#txt").val(x + "+")
+                }
+            });
+            $("#dot").click(function () {
+                var x = document.getElementById("txt").value;
+                var y = x.slice(-1)
+                if (y == ".") { } else {
+                    $("#txt").val(x + ".")
+                }
+            });
+            $("#back").click(function () {
+                var x = document.getElementById("txt").value;
+                $("#txt").val(x.substring(0, x.length - 1))
+            });
+        });
+    </script>*@ 
